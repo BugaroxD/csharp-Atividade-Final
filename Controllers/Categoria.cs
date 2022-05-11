@@ -74,5 +74,5 @@ namespace Controller
 
             return categoria;
         }
-    }
-}
+    } // public class CategoriaController
+} // namespace Controller
