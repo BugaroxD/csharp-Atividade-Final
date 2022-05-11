@@ -86,5 +86,5 @@ namespace Controllers
 
             return usuario;
         }
-    }
-}
+    } // public class UsuarioController
+} // namespace Controller
