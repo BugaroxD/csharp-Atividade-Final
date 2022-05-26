@@ -38,3 +38,10 @@ C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.
 C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.1\encryptme.dll
 C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.1\encryptme.pdb
 C:\Users\jefferson.clemente\Documents\GitHub\csharp-final\obj\Debug\netcoreapp3.1\encryptme.genruntimeconfig.cache
+c:\Users\jefferson.clemente\Documents\GitHub\csharp-Atividade-Final\obj\Debug\netcoreapp3.1\encryptme.csproj.AssemblyReference.cache
+c:\Users\jefferson.clemente\Documents\GitHub\csharp-Atividade-Final\obj\Debug\netcoreapp3.1\encryptme.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\jefferson.clemente\Documents\GitHub\csharp-Atividade-Final\obj\Debug\netcoreapp3.1\encryptme.AssemblyInfoInputs.cache
+c:\Users\jefferson.clemente\Documents\GitHub\csharp-Atividade-Final\obj\Debug\netcoreapp3.1\encryptme.AssemblyInfo.cs
+c:\Users\jefferson.clemente\Documents\GitHub\csharp-Atividade-Final\obj\Debug\netcoreapp3.1\encryptme.csproj.CoreCompileInputs.cache
+c:\Users\jefferson.clemente\Documents\GitHub\csharp-Atividade-Final\obj\Debug\netcoreapp3.1\encryptme.dll
+c:\Users\jefferson.clemente\Documents\GitHub\csharp-Atividade-Final\obj\Debug\netcoreapp3.1\encryptme.pdb
