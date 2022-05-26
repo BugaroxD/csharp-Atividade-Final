@@ -59,7 +59,7 @@ namespace Views
         }
         public void ClickOnUserBttn(object sender, EventArgs e)
         {
-            Usuario UsuarioViews = new Usuario();
+            UsuarioView UsuarioViews = new UsuarioView(this);
             UsuarioViews.ShowDialog();
         }
         /*
