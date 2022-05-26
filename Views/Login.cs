@@ -23,7 +23,7 @@ namespace Views
             this.txtUser = new Generic.FieldOnTextBox(50, 60, 200, 20);
 
             this.lblPassword = new Generic.FieldOnLabel("Senha", 120, 100);
-            this.txtPassword = new Generic.FieldOnTextBox(70, 160, 230, 30);
+            this.txtPassword = new Generic.FieldOnTextBox(50, 140, 200, 30);
             this.txtPassword.PasswordChar = '*';
 
             bttnLogin = new Generic.FieldOnButton("Conectar", 50, 220, 100, 30);

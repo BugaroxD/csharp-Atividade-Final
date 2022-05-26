@@ -27,7 +27,7 @@ namespace Views
 
             this.bttnUser = new Generic.FieldOnButton("Usuário", 100, 170, 100, 30);
             bttnUser.Click += new EventHandler(this.ClickOnUserBttn);
-
+/*
             this.bttnPassword = new Generic.FieldOnButton("Senhas", 100, 130, 100, 30);
             bttnPassword.Click += new EventHandler(this.ClickOnPasswordBttn);
 
@@ -36,7 +36,7 @@ namespace Views
 
             this.bttnTags = new Generic.FieldOnButton("Tags", 100, 90, 100, 30);
             bttnTags.Click += new EventHandler(this.ClickOnTagBttn);
-
+*/
             this.bttnExit = new Generic.FieldOnButton("Sair", 100, 210, 100, 30);
             this.bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
 
@@ -74,8 +74,6 @@ namespace Views
             Senha SenhaViews = new Senha();
             SenhaViews.ShowDialog();
         }
-
-        
 
         public void ClickOnTagBttn(object sender, EventArgs e)
         {
