@@ -11,28 +11,29 @@ namespace Views
     {
         
 
-        Form user;
+        
         ListView listView;
         Button bttnReturn;
         Button bttnInsert;
         Button bttnDelete;
         Button bttnUpdate;
 
-        public UsuarioView(Form user)
+        public UsuarioView()
         {
 
-            this.user = user;
-
-            bttnReturn = new Generic.FieldOnButton("Voltar", 25, 450, 100, 30);
+            this.ClientSize = new System.Drawing.Size(500, 500);
+            this.Text = "Usuário";
+            
+            bttnReturn = new Generic.FieldOnButton("Voltar", 355, 450, 80, 25);
 			bttnReturn.Click += new EventHandler(this.ClickOnReturnBttn);
             
-            bttnInsert = new Generic.FieldOnButton("Cadastrar", 130, 450, 100, 30);
+            bttnInsert = new Generic.FieldOnButton("Cadastrar", 15, 450, 80, 25);
             //bttnInsert.Click += new EventHandler(this.ClickOnInsertBttn);
 
-            bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 30);
+            bttnDelete = new Generic.FieldOnButton("Deletar", 235, 450, 100, 25);
 			bttnDelete.Click += new EventHandler(this.ClickOnDeleteBttn);
 
-            bttnUpdate = new Generic.FieldOnButton("Editar", 345, 450, 100, 30);
+            bttnUpdate = new Generic.FieldOnButton("Editar", 135, 450, 80, 25);
            //bttnUpdate.Click += new EventHandler(this.ClickOnUpdateBttn);
 
             // Select dos registros
