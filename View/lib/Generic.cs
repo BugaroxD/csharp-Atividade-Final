@@ -1,75 +1,38 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace lib
 {
-    public class GenericField
-    {
-        public string id;
-        public TextBox textBox;
-        public Label label;
-        
-        public GenericField(
-            string id,
-            int pointA,
-            int pointB,
-            string label,
-            int sizeA = 280,
-            int sizeB = 55,
-            string valueDefault = "",
-            char characterPass = ' '
-        )
-        {
-            this.id = id;
-
-            this.textBox = new TextBox();
-            this.textBox.Location = new Point(pointA, pointB);
-            this.textBox.Size = new Size(sizeA, sizeB);
-            this.textBox.Text = valueDefault;
-
-            this.label = new Label();
-            this.label.Text = label;
-            this.label.Location = new Point(pointA, pointB);
-
-            if (!Char.IsWhiteSpace(characterPass))
-            {
-                this.textBox.PasswordChar = characterPass;
-            }
-        }
-    }
+    
     public class Generic : Form
     {
         public Generic()
         {}
 
-        public class TamOnLabelField : Label
+        public class FieldOnLabel : Label
         {
-            public TamOnLabelField(string Text, int x, int y, int Z, int W)
+            public FieldOnLabel(string Text, int x, int y, int Z, int W)
             {
                 this.Text = Text;
-                this.Location = new Point(x, y);
-                this.Size = new Size(Z, W);
+                this.Size = new Size(x, y);
+                this.Location = new Point(Z, W);
             }
         }
 
-        public class FieldOnLabel : Label
-        {
-            public FieldOnLabel(string Text, int x, int y)
-            {
-                this.Text = Text;
-                this.Location = new Point(x, y);
-            }
-        }
+        public delegate void HandleButton(object sender, EventArgs e);
 
         public class FieldOnButton : Button
         {
-            public FieldOnButton(string Text, int x, int y, int Z, int W)
+            public FieldOnButton(string Text, int x, int y, int Z, int W, HandleButton handleAction)
             {
                 this.Text = Text;
-                this.Location = new Point(x, y);
-                this.Size = new Size(Z, W);
+                this.Size = new Size(x, y);
+                this.Location = new Point(Z, W);
                 this.BackColor = Color.White;
+                this.Click += new EventHandler(handleAction);
             }
         }
 
@@ -77,8 +40,8 @@ namespace lib
         {
             public FieldOnTextBox(int x, int y, int Z, int W)
             {
-                this.Location = new Point(x, y);
-                this.Size = new Size(Z, W);
+                this.Size = new Size(x, y);
+                this.Location = new Point(Z, W);
             }
         }
 
@@ -99,14 +62,18 @@ namespace lib
             {
                 this.Close();
             }
-
-            public class ConfirmMessage
-            {
-                public static DialogResult Show(
-                    string Message = "Mais um click e sua ação sera confirmada, tem certeza de que deseja isto?"
-                    )
+        }
+    }
+    public class ConfirmMessage
+        {
+            public static DialogResult Show
+                (
+                    string Message = 
+                        "Mais um click e sua ação sera confirmada, tem certeza de que deseja isto?"
+                )
                 {
-                    return MessageBox.Show(
+                    return MessageBox.Show
+                    (
                         "Confirmar",
                         Message,
                         MessageBoxButtons.YesNo,
@@ -114,12 +81,13 @@ namespace lib
                     );
                 }
             }
-
-            public class CancelMessage
-            {
-                public static DialogResult Show(
-                    string Mensagem = "Mais um click e sua ação sera cancelada, tem certeza de que deseja isto??"
-                    )
+    public class CancelMessage
+        {
+            public static DialogResult Show
+                (
+                    string Mensagem = 
+                        "Mais um click e sua ação sera cancelada, tem certeza de que deseja isto??"
+                )
                 {
                     return MessageBox.Show(
                         "Cancelar",
@@ -130,9 +98,12 @@ namespace lib
                 }
             }
 
-            public class ErrorMessage
-            {
-                public static DialogResult Show(string Mensagem = "Error... Contate o técnico responsável")
+    public class ErrorMessage
+        {
+            public static DialogResult Show
+                (
+                    string Mensagem = "Error... Contate o técnico responsável"
+                )
                 {
                     return MessageBox.Show(
                         "Error",
@@ -143,6 +114,43 @@ namespace lib
                 }
 
             }
+    public enum Function
+            { Create, Update }
+
+    public class ListViewItems<T> : ListView
+    {
+        public ListViewItems(ControlCollection Ref, string Name, IEnumerable<T> list, string[] generics)
+        {
+            this.Columns.Add("Id", 100);
+            foreach (string generic in generics)
+            {
+                this.Columns.Add(generic, 100);
+            }
+            foreach (T item in list)
+            {
+                Type type = item.GetType();
+                PropertyInfo prop = type.GetProperty("Id");
+                ListViewItem newItem = new ListViewItem(prop.GetValue(item).ToString());
+                foreach (string generic in generics)
+                {
+                    prop = type.GetProperty(generic);
+                    newItem.SubItems.Add(prop.GetValue(item).ToString());
+                }
+                this.Items.Add(newItem);
+            }
+            this.Name = Name;
+            this.Location = new System.Drawing.Point(10, 10);
+            this.ClientSize = new System.Drawing.Size(280, 340);
+
+            this.View = View.Details;
+            this.LabelEdit = true;
+            this.AllowColumnReorder = true;
+            this.CheckBoxes = true;
+            this.FullRowSelect = true;
+            this.GridLines = true;
+            this.Sorting = SortOrder.Ascending;
+
+            Ref.Add(this);
         }
     }
 }
