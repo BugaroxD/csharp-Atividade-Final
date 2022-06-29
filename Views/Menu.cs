@@ -6,21 +6,18 @@ using System.Drawing;
 
 namespace Views
 {
-    public class Menu : Form
+    public class MenuForm : Form
     {
-        Form menus;
-        private System.ComponentModel.IContainer components = null;
-
-        Label lblTitle;
-
+        Label lblMenu;
         Button bttnUser;
         Button bttnExit;
         Button bttnCategory;
         Button bttnTags;
         Button bttnPassword;
 
-        public Menu(Form menus)
+        public MenuForm()
         {
+<<<<<<< HEAD:Views/Menu.cs
             this.menus = menus;
 
             this.lblTitle = new Generic.TamOnLabelField($"Bem vindo(a)!", 120, 15, 150, 30);
@@ -39,49 +36,56 @@ namespace Views
 */
             this.bttnExit = new Generic.FieldOnButton("Sair", 100, 210, 100, 30);
             this.bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
+=======
+            this.ClientSize = new System.Drawing.Size(230, 210);
+            this.Text = "Menu";
+>>>>>>> 539f89a423ce3a64de70bb0647c6a0144b60e129:View/Menu.cs
 
-            this.Controls.Add(this.lblTitle);
+            this.lblMenu = new Generic.FieldOnLabel($"Olá, {Usuario.UsuarioAuth.Nome}", 220, 20, 0, 20);
+            lblMenu.TextAlign = ContentAlignment.MiddleCenter;
+            this.bttnUser = new Generic.FieldOnButton("Usuários", 90, 35, 15, 60, this.ClickOnUserBttn);
+            this.bttnPassword = new Generic.FieldOnButton("Senhas", 90, 35, 120, 60, this.ClickOnPasswordBttn);
+            this.bttnCategory = new Generic.FieldOnButton("Categorias", 90, 35, 15, 110, this.ClickOnCategoryBttn);
+            this.bttnTags = new Generic.FieldOnButton("Tags", 90, 35, 120, 110, this.ClickOnTagBttn);
+            this.bttnExit = new Generic.FieldOnButton("Sair", 100, 35, 60, 160, this.ClickOnExitBttn);
+            
+            this.Controls.Add(this.lblMenu);
             this.Controls.Add(this.bttnCategory);
             this.Controls.Add(this.bttnTags);
             this.Controls.Add(this.bttnPassword);
             this.Controls.Add(this.bttnUser);
             this.Controls.Add(this.bttnExit);
-
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 350);
-            this.Text = "Menu";
+            
         }
 
-        public void ClickOnExitBttn(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
         public void ClickOnUserBttn(object sender, EventArgs e)
         {
-            Usuario UsuarioViews = new Usuario();
-            UsuarioViews.ShowDialog();
+            new UsuarioView().Show();
         }
-        /*
-        public void ClickOnCategoryBttn(object sender, EventArgs e)
-        {
-            Categoria CategoriaViews = new Categoria();
-            CategoriaViews.ShowDialog();
-        }
-
+        
         public void ClickOnPasswordBttn(object sender, EventArgs e)
         {
-            Senha SenhaViews = new Senha();
-            SenhaViews.ShowDialog();
+            new SenhaView().Show();
+        }
+               
+        public void ClickOnCategoryBttn(object sender, EventArgs e)
+        {
+           new CategoriaView().Show();
         }
 
         public void ClickOnTagBttn(object sender, EventArgs e)
         {
-            Tag TagViews = new Tag(this);
-            TagViews.ShowDialog();
+            new TagView().Show();
         }
-        */
+<<<<<<< HEAD:Views/Menu.cs
 
+        public void ClickOnTagBttn(object sender, EventArgs e)
+=======
+        
+        public void ClickOnExitBttn(object sender, EventArgs e)
+>>>>>>> 539f89a423ce3a64de70bb0647c6a0144b60e129:View/Menu.cs
+        {
+            Application.Exit();
+        }
     }
-
 }
