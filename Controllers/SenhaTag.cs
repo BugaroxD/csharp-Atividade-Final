@@ -5,7 +5,7 @@ using Models;
 
 namespace Controllers
 {
-    public class SenhaTagController
+    public class TagSenhaController
     {
         public static SenhaTag InserirSenhaTag(
             int SenhaId,
