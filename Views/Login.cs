@@ -1,9 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using lib;
 using Models;
-
 namespace Views
 {
     public class LoginForm : GenericBase

@@ -71,6 +71,14 @@ namespace Controllers
         {
             return Usuario.GetUsuarios();
         }
+
+         public static Usuario GetUsuario(
+            int Id
+        )
+        {
+            return Usuario.GetUsuario(Id);
+        }
+        
         public static Usuario GetUsuarios(int Id)
         {
             Usuario usuario = (
