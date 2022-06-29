@@ -4,7 +4,11 @@ using System.Drawing;
 
 namespace lib
 {
+<<<<<<< HEAD:Views/lib/Generic.cs
     public class GenericField 
+=======
+    public class GenericField
+>>>>>>> 96bc86ddeb2db1b94d61abc3e9afae9801a1e171:View/lib/Generic.cs
     {
         public string id;
         public TextBox textBox;
