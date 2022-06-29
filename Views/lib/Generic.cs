@@ -6,7 +6,40 @@ using System.Reflection;
 
 namespace lib
 {
-    
+    public class GenericField 
+    {
+        public string id;
+        public TextBox textBox;
+        public Label label;
+        
+        public GenericField(
+            string id,
+            int pointA,
+            int pointB,
+            string label,
+            int sizeA = 280,
+            int sizeB = 55,
+            string valueDefault = "",
+            char characterPass = ' '
+        )
+        {
+            this.id = id;
+
+            this.textBox = new TextBox();
+            this.textBox.Location = new Point(pointA, pointB);
+            this.textBox.Size = new Size(sizeA, sizeB);
+            this.textBox.Text = valueDefault;
+
+            this.label = new Label();
+            this.label.Text = label;
+            this.label.Location = new Point(pointA, pointB);
+
+            if (!Char.IsWhiteSpace(characterPass))
+            {
+                this.textBox.PasswordChar = characterPass;
+            }
+        }
+    }
     public class Generic : Form
     {
         public Generic()
