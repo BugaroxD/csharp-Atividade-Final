@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Models
 {
-    public class Usuario
+    public class Usuario : Form
     {
         public static Usuario UsuarioAuth;
 

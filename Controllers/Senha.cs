@@ -108,20 +108,21 @@ namespace Controllers
             return Senha.GetSenha(Id);
         }
 
-    public static Senha GetSenhas(int Id)
-    {
-      Senha senha = (
-          from Senha in Senha.GetSenhas()
-          where Senha.Id == Id
-          select Senha
-      ).First();
+        public static Senha GetSenhas(int Id)
+        {
+            Senha senha = (
+                from Senha in Senha.GetSenhas()
+                where Senha.Id == Id
+                select Senha
+            ).First();
 
-      if (senha == null)
-      {
-        throw new Exception("Senha não encontrada");
-      }
+            if (senha == null)
+            {
+                throw new Exception("Senha não encontrada");
+            }
 
-      return senha;
-    }
-  } // public class SenhaController
-} // namespace Controllerss
+            return senha;
+        }
+
+    } // public class SenhaController
+} // namespace Controller
