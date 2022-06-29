@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Models;
 
-namespace Controller
+namespace Controllers
 {
     public class CategoriaController
     {
@@ -31,7 +31,7 @@ namespace Controller
             string Descricao
         )
         {
-            Categoria categoria = GetCategorias(Id);
+            Categoria categoria = GetCategoria(Id);
 
             if (!String.IsNullOrEmpty(Nome))
             {
@@ -49,7 +49,7 @@ namespace Controller
            int Id
        )
         {
-            Categoria categoria = GetCategorias(Id);
+            Categoria categoria = GetCategoria(Id);
             Categoria.RemoverCategoria(categoria);
             return categoria;
         }
@@ -58,6 +58,14 @@ namespace Controller
         {
             return Categoria.GetCategorias();
         }
+
+        public static Categoria GetCategoria(
+            int Id
+        )
+        {
+            return Categoria.GetCategoria(Id);
+        }
+
 
         public static Categoria GetCategorias(int Id)
         {
@@ -69,10 +77,10 @@ namespace Controller
 
             if (categoria == null)
             {
-                throw new Exception("Dentista não encontrado");
+                throw new Exception("Categoria não encontrada");
             }
 
             return categoria;
         }
-    } // public class CategoriaController
-} // namespace Controller
+    }
+}
