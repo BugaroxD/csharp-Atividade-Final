@@ -17,29 +17,8 @@ namespace Views
 
         public MenuForm()
         {
-<<<<<<< HEAD:Views/Menu.cs
-            this.menus = menus;
-
-            this.lblTitle = new Generic.TamOnLabelField($"Bem vindo(a)!", 120, 15, 150, 30);
-
-            this.bttnUser = new Generic.FieldOnButton("Usuário", 100, 170, 100, 30);
-            bttnUser.Click += new EventHandler(this.ClickOnUserBttn);
-/*
-            this.bttnPassword = new Generic.FieldOnButton("Senhas", 100, 130, 100, 30);
-            bttnPassword.Click += new EventHandler(this.ClickOnPasswordBttn);
-
-            this.bttnCategory = new Generic.FieldOnButton("Categoria", 100, 50, 100, 30);
-            bttnCategory.Click += new EventHandler(this.ClickOnCategoryBttn);
-
-            this.bttnTags = new Generic.FieldOnButton("Tags", 100, 90, 100, 30);
-            bttnTags.Click += new EventHandler(this.ClickOnTagBttn);
-*/
-            this.bttnExit = new Generic.FieldOnButton("Sair", 100, 210, 100, 30);
-            this.bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
-=======
             this.ClientSize = new System.Drawing.Size(230, 210);
             this.Text = "Menu";
->>>>>>> 539f89a423ce3a64de70bb0647c6a0144b60e129:View/Menu.cs
 
             this.lblMenu = new Generic.FieldOnLabel($"Olá, {Usuario.UsuarioAuth.Nome}", 220, 20, 0, 20);
             lblMenu.TextAlign = ContentAlignment.MiddleCenter;
@@ -77,13 +56,8 @@ namespace Views
         {
             new TagView().Show();
         }
-<<<<<<< HEAD:Views/Menu.cs
-
-        public void ClickOnTagBttn(object sender, EventArgs e)
-=======
         
         public void ClickOnExitBttn(object sender, EventArgs e)
->>>>>>> 539f89a423ce3a64de70bb0647c6a0144b60e129:View/Menu.cs
         {
             Application.Exit();
         }
