@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
@@ -7,64 +6,59 @@ using Models;
 
 namespace Views
 {
-    public class Login : Form
+    public class LoginForm : GenericBase
     {
-        Label lblUser;
-        Label lblPassword;
-        TextBox txtUser;
-        TextBox txtPassword;
-
+        public List<GenericField> generics;
         Button bttnLogin;
+        Button bttnRegister;
         Button bttnExit;
-        Button bttnCadastrar;
-        public Login()
+        
+        public LoginForm(): base()
         {
-            this.lblUser = new Generic.FieldOnLabel("Usuário", 120, 30);
-            this.txtUser = new Generic.FieldOnTextBox(50, 60, 200, 20);
-
-            this.lblPassword = new Generic.FieldOnLabel("Senha", 120, 100);
-            this.txtPassword = new Generic.FieldOnTextBox(50, 140, 200, 30);
-            this.txtPassword.PasswordChar = '*';
-
-            bttnLogin = new Generic.FieldOnButton("Conectar", 50, 220, 100, 30);
-            bttnLogin.Click += new EventHandler(this.ClickOnLoginBttn);
-
-            bttnCadastrar = new Generic.FieldOnButton("Conectar", 50, 220, 100, 30);
-            bttnCadastrar.Click += new EventHandler(this.ClickOnLoginBttn);
-
-            bttnExit = new Generic.FieldOnButton("Sair", 150, 220, 100, 30);
-            bttnExit.Click += new EventHandler(this.ClickOnExitBttn);
-
-            this.Controls.Add(this.lblUser);
-            this.Controls.Add(this.lblPassword);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtUser);
-            this.Controls.Add(this.bttnLogin);
-            this.Controls.Add(this.bttnExit);
-
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.ClientSize = new System.Drawing.Size(270, 250);
             this.Text = "Login";
+
+            base.generics.Add(new GenericField("user", 15, 20, "Usuário"));
+            base.generics.Add(new GenericField("password", 15, 90, "Senha", 240, 15, '*'));
+            
+            bttnLogin = new Generic.FieldOnButton("Conectar", 75, 30, 45, 160, this.ClickOnLoginBttn);
+            bttnRegister = new Generic.FieldOnButton("Novo usuário!", 60, 75, 160, 160, this.ClickOnRegisterBttn);
+            bttnExit = new Generic.FieldOnButton("Sair", 75, 30, 45, 205, this.ClickOnExitBttn);
+            
+            foreach (GenericField generic in base.generics)
+            {
+                this.Controls.Add(generic.label);
+                this.Controls.Add(generic.textBox);
+            }
+            this.Controls.Add(this.bttnLogin);
+            this.Controls.Add(this.bttnRegister);
+            this.Controls.Add(this.bttnExit);
         }
+
+        // Funções dos botões
 
         public void ClickOnLoginBttn(object sender, EventArgs e)
         {
+            GenericField genericLogin = base.generics.Find((GenericField generic) => generic.id == "user");
+            GenericField genericSenha = base.generics.Find((GenericField generic) => generic.id == "password");
+
             try
             {
-                Menu Menus = new Menu(this);
-                Menus.Show();
-                this.Hide();
+                Usuario.Auth(genericLogin.textBox.Text, genericSenha.textBox.Text);
+                (new MenuForm()).Show();
             }
             catch (Exception err)
             {
-                MessageBox.Show("Usuário ou senha inválido", "Erro");
+                MessageBox.Show(err.Message);
             }
+        }
+          private void ClickOnRegisterBttn(object sender, EventArgs e)
+        {
+            new UserForm(Function.Create).Show();
         }
         public void ClickOnExitBttn(object sender, EventArgs e)
         {
             this.Close();
         }
-
     }
-
 }
