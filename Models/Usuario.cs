@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Repository;
-using System.Windows.Forms;
+using System;
 
 namespace Models
 {
-    public class Usuario : Form
+    public class Usuario
     {
         public static Usuario UsuarioAuth;
 
@@ -33,7 +33,7 @@ namespace Models
 
         public override string ToString()
         {
-            return $"\n ---------------------------------------"
+            return $"\n *"
                 + $"\n ID: {this.Id}"
                 + $"\n Nome: {this.Nome}"
                 + $"\n Email: {this.Email}";
@@ -101,6 +101,7 @@ namespace Models
 
         public static void Auth(string Email, string Senha)
         {
+            try{
             Usuario usuario = GetUsuarios()
                 .Where(it => it.Email == Email 
                     && BCrypt.Net.BCrypt.Verify(Senha, it.Senha)
@@ -108,6 +109,11 @@ namespace Models
                 .First();
             
             UsuarioAuth = usuario;
+            }
+            catch
+            {
+                throw new Exception("Usuário ou senha inválido.");
+            }
         }
     }
 }

@@ -7,49 +7,41 @@ using lib;
 
 namespace Views
 {
-    public class SenhaView : Form
+    public class SenhaView : BaseForm
     {
-        ListView listView;
+        private System.ComponentModel.IContainer components = null;
+        ListView listaSenhas;
         Button bttnInsert;
         Button bttnUpdate;
         Button bttnDelete;
         Button bttnReturn;
 
-        public SenhaView()
+        public SenhaView() : base("Senhas")
         {
-            this.ClientSize = new System.Drawing.Size(305, 450);
-            this.Text = "Senhas";
+            string[] fields = { "Nome", "CategoriaId", "Url", "Usuario", "SenhaEncrypt", "Procedimento" };
+            this.listaSenhas = new ListViewItems<Models.Senha>(this.Controls, "Lista de Senhas", Models.Senha.GetSenhas(), fields);
+            this.bttnInsert = new Generic.ButtonForm(this.Controls, "Cadastrar", 35, 370, this.ClickOnInsertBttn);
+            this.bttnUpdate = new Generic.ButtonForm(this.Controls, "Editar", 165, 370, this.ClickOnUpdateBttn);
+            this.bttnDelete = new Generic.ButtonForm(this.Controls, "Deletar", 35, 410, this.ClickOnDeleteBttn);
+            this.bttnReturn = new Generic.ButtonForm(this.Controls, "Voltar", 165, 410, this.ClickOnReturnBttn);
 
-            bttnInsert = new Generic.FieldOnButton("Cadastrar", 100, 30, 35, 370, this.ClickOnInsertBttn);
-            bttnUpdate = new Generic.FieldOnButton("Editar", 100, 30, 165, 370, this.ClickOnUpdateBttn);
-            bttnReturn = new Generic.FieldOnButton("Voltar", 100, 30,  165, 410, this.ClickOnReturnBttn);
-            bttnDelete = new Generic.FieldOnButton("Deletar", 100, 30, 35, 410, this.ClickOnDeleteBttn);
-
-        // Select dos registros
-
-            string[] generics = {"Nome", "CategoriaId", "Url", "Usuario", "SenhaEncrypt", "Procedimento"};
-            this.listView = new ListViewItems<Models.Senha>(this.Controls, "Lista de Senhas", Models.Senha.GetSenhas(), generics);
-
-            this.Controls.Add(this.bttnInsert);
-            this.Controls.Add(this.bttnUpdate);
-            this.Controls.Add(this.bttnReturn);
-            this.Controls.Add(this.bttnDelete);
+            this.components = new System.ComponentModel.Container();
         }
 
         // Funções dos botões
-        
+
         private void ClickOnInsertBttn(object sender, EventArgs e)
         {
-            new PassForm(Function.Create).Show();
-            this.Dispose();
+            SenhaCadastrar novaSenha = new SenhaCadastrar();
+            novaSenha.ShowDialog();
         }
 
         private void ClickOnUpdateBttn(object sender, EventArgs e)
         {
             try
             {
-                new PassForm(Function.Update).Show();
-                this.Dispose();
+                SenhaAlterar alterarSenha = new SenhaAlterar(this.listaSenhas.CheckedItems[0].Text);
+                alterarSenha.ShowDialog();
             }
             catch (Exception)
             {
@@ -61,19 +53,15 @@ namespace Views
         {
             try
             {
-                int passId = Convert.ToInt32(listView.CheckedItems[0].Text);
-                DialogResult result = MessageBox.Show($"Para efetuar a exclusão da senha {passId} clicar em SIM! Se for engano clique em NÃO!", "Excluir", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if(result == DialogResult.Yes)
-                {
-                    SenhaController.ExcluirSenha(passId);
-                }
+                SenhaController.ExcluirSenha(Convert.ToInt32(listaSenhas.CheckedItems[0].Text));
+                MessageBox.Show("Senha removida com sucesso.");
                 this.Close();
             }
             catch (Exception)
             {
                 ErrorMessage.Show();
             }
-            
+
         }
 
         private void ClickOnReturnBttn(object sender, EventArgs e)

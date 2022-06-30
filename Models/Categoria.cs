@@ -27,7 +27,7 @@ namespace Models
 
         public override string ToString()
         {
-            return $"\n ---------------------------------------"
+            return $"\n *"
                 + $"\n ID: {this.Id}"
                 + $"\n Nome: {this.Nome}"
                 + $"\n Descricao: {this.Descricao}";
@@ -68,10 +68,17 @@ namespace Models
         }
 
 
-        public static IEnumerable<Categoria> GetCategorias()
+        public static List<Categoria> GetCategorias()
         {
-            Context db = new Context();
-            return (from Categoria in db.Categorias select Categoria);
+            try
+            {
+                Context db = new Context();
+                return (from Categoria in db.Categorias select Categoria).ToList();
+            }
+            catch
+            {
+                throw new System.Exception("Sem conexão com o banco!");
+            }
         }
 
         public static Categoria GetCategoria(int Id)

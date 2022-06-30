@@ -42,10 +42,10 @@ namespace Views
             bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 40, 60,220, this.ClickOnConfirmBttn);
             bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 40, 180, 220, this.ClickOnCancelBttn);
            
-            foreach (GenericField generics in base.generics)
+            foreach (GenericField generic in base.generics)
             {
-                this.Controls.Add(generics.label);
-                this.Controls.Add(generics.textBox);
+                this.Controls.Add(generic.label);
+                this.Controls.Add(generic.textBox);
             }
 
             this.Controls.Add(bttnConfirm);
@@ -82,7 +82,7 @@ namespace Views
             }
             catch (Exception)
             {
-                ErrorMessage.Show();
+                ErrorMessage.Show("Teste");
             }
         }
 
@@ -93,190 +93,129 @@ namespace Views
     }
 
     // Funções de Senha   
-    public class PassForm : GenericBase
+    public class SenhaCadastrar : BaseForm
     {
-        public static Senha senha = null;
-        public static SenhaTag senhaTag;
-        public static Function option;
-        public static int categoryId;
-        public static int passId;
-        public List<GenericField> generics;
-        Label lblCategory;
-        Label lblProcedure;
-        Label lblTags;
-        TextBox txtProcedure;
-        CheckedListBox checkBoxTags;
-        ComboBox comboCategory;
+        private System.ComponentModel.IContainer components = null;
+        Generic.Field name;
+        Generic.Field url;
+        Generic.Field user;
+        ListView listViewTag; 
+        Generic.Field senhaEncrypt;
+        Generic.Field procedure;
+        ComboCategory comboCategory;
         Button bttnConfirm;
         Button bttnCancel;
 
-        public PassForm(
-            Function function,
-            int id = 0
-        ) : base()
+        public SenhaCadastrar() : base("Cadastrar nova Senha.")
         {
-            option = function;
-            passId = id;
-
-            if (id > 0)
-            {
-                senha = SenhaController.GetSenha(id);
-            }
-
-            this.ClientSize = new System.Drawing.Size(300, 720);
-            this.Text = function == Function.Create
-                ? "Cadastro de senha"
-                : "Alteração de senha";
-
-            base.generics.Add(new GenericField("name", 10, 20, "Nome", 280, 15, ' ', senha != null ? senha.Nome : null));
-            base.generics.Add(new GenericField("url", 10, 90, "Url", 280, 15, ' ', senha != null ? senha.Url : null));
-            base.generics.Add(new GenericField("user", 10, 160, "Usuário", 280, 15, ' ', senha != null ? senha.Usuario : null));
-            base.generics.Add(new GenericField("pass", 10, 230, "Senha", 280, 15, '*', senha != null ? senha.SenhaEncrypt : null));
-
-            lblCategory = new Generic.FieldOnLabel("Categoria", 280, 15, 10, 300);
-
-            string[] categoria = {};
-			this.comboCategory = new ComboBox();
-			foreach (Categoria item in CategoriaController.VisualizarCategoria())
-			{
-				this.comboCategory.Items.Add(item.ToString());
-			}
-			this.comboCategory.Location = new Point(10, 325);
-			this.comboCategory.Size = new Size(280, 15);
-
-            lblProcedure = new Generic.FieldOnLabel("Procedimento", 280, 15, 10, 370);
-
-            this.txtProcedure = new TextBox();
-            this.txtProcedure.Multiline = true;
-            this.txtProcedure.ScrollBars = ScrollBars.Vertical;
-            this.txtProcedure.AcceptsReturn = true;
-            this.txtProcedure.WordWrap = true;
-            this.txtProcedure.Location = new Point(10, 400);
-            this.txtProcedure.Size = new Size(280, 100);
-
-            lblTags = new Generic.FieldOnLabel("Tags", 280, 15, 10, 525);
-
-            this.checkBoxTags = new CheckedListBox();
-            this.checkBoxTags.Location = new Point(10, 550);
-            this.checkBoxTags.Size = new Size(280, 100);
-            int order = 0;
-            foreach (Tag item in TagController.VisualizarTag())
-            {
-                this.checkBoxTags.Items.Add(item.ToString());
-                if (senha != null)
-                {
-                    SenhaTag theTagSenha =  TagSenhaController.GetBySenhaTag(senha.Id, item.Id);
-                    if (theTagSenha != null)
-                    {
-                        this.checkBoxTags.SetItemChecked(order, true);
-                    }
-                }
-                order++;
-            }
-            this.checkBoxTags.SelectionMode = SelectionMode.One;
-            this.checkBoxTags.CheckOnClick = true;            
-
-            bttnConfirm = new Generic.FieldOnButton("Confirmar", 90, 35, 40, 665, this.ClickOnConfirmBttn);
-            bttnCancel = new Generic.FieldOnButton( "Cancelar", 90, 35, 165, 665, this.ClickOnCancelBttn);
-
-            foreach (GenericField generic in base.generics)
-            {
-                this.Controls.Add(generic.label);
-                this.Controls.Add(generic.textBox);
-            }
-
-            if (senha != null) 
-            {
-                this.comboCategory.Text = senha.Categoria.ToString();
-                this.txtProcedure.Text = senha.Procedimento;
-            }
-
-            this.Controls.Add(lblTags);
-            this.Controls.Add(checkBoxTags);
-            this.Controls.Add(lblProcedure);
-            this.Controls.Add(txtProcedure);
-            this.Controls.Add(lblCategory);
-            this.Controls.Add(comboCategory);
-            this.Controls.Add(bttnConfirm);
-            this.Controls.Add(bttnCancel);
+            string[] fields = {"Descricao"};
+            this.name = new Generic.Field(this.Controls, "Nome", 20, true);
+            this.comboCategory = new ComboCategory(this.Controls);
+            this.url = new Generic.Field(this.Controls, "Url", 130, true);
+            this.user = new Generic.Field(this.Controls, "Usuário", 190, true);
+            this.senhaEncrypt = new Generic.Field(this.Controls, "Senha", 250, true, true);
+            this.procedure = new Generic.Field(this.Controls, "Procedimento", 310, true);
+            this.listViewTag = new ListViewTag<Models.Tag>(this.Controls, "Lista de Tags", Models.Tag.GetTags(), fields);
+            this.bttnConfirm = new Generic.ButtonForm(this.Controls, "Confirmar", 20, 600, this.ClickOnConfirmBttn);
+            this.bttnCancel = new Generic.ButtonForm(this.Controls, "Voltar", 180, 600, this.ClickOnCancelBttn);
+            
+            this.components = new System.ComponentModel.Container();
         }
 
-        private void ClickOnConfirmBttn(object sender, EventArgs e)
+        private void ClickOnConfirmBttn(object sender, EventArgs e) 
         {
             
-            GenericField genericName = base.generics.Find((GenericField field) => field.id == "name");
-            GenericField genericUrl = base.generics.Find((GenericField field) => field.id == "url");
-            GenericField genericUsuario = base.generics.Find((GenericField field) => field.id == "user");
-            GenericField genericSenhaEncrypt = base.generics.Find((GenericField field) => field.id == "pass");
             try
             {
-            var category = comboCategory.SelectedItem.ToString();
-            var startId = category.IndexOf("- ");
-            var categoryId = Convert.ToInt32(category.Substring(0, startId - 1));
-            }
-            catch (Exception)
+                string comboValue = this.comboCategory.Items[0].ToString(); // "1 - Nome";
+                string[] comboSplit = comboValue.Split('-'); //['1 ', ' Nome']
+
+                SenhaController.InserirSenha(
+                    this.name.textField.Text,
+                    Convert.ToInt16(comboSplit[0].Trim()),
+                    this.url.textField.Text,
+                    this.user.textField.Text,
+                    this.senhaEncrypt.textField.Text,
+                    this.procedure.textField.Text
+                );
+                MessageBox.Show("Senha cadastrada com sucesso.");
+                this.Close();
+                SenhaView senha = new SenhaView();
+                senha.ShowDialog();
+            }   
+            catch (Exception err)
             {
-               ErrorMessage.Show("Campo categoria não pode ser vazio, favor inserir informação referente!");
+                MessageBox.Show(err.Message);
             }
+            
+        }
+
+        private void ClickOnCancelBttn(object sender, EventArgs e) 
+        {
+            this.Hide();
+        }
+    }
+    public class SenhaAlterar : BaseForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        Generic.Field passId;
+        Generic.Field name;
+        Generic.Field url;
+        Generic.Field user;
+        ListView listViewTag; 
+        Generic.Field senhaEncrypt;
+        Generic.Field procedure;
+        ComboCategory comboCategory;
+        Button bttnConfirm;
+        Button bttnCancel;
+
+        public SenhaAlterar(string id) : base("Alterar senha existente.")
+        {
+            string[] fields = {"Descricao"};
+            this.name = new Generic.Field(this.Controls, "Nome", 20, true);
+            this.comboCategory = new ComboCategory(this.Controls);
+            this.url = new Generic.Field(this.Controls, "Url", 130, true);
+            this.user = new Generic.Field(this.Controls, "Usuário", 190, true);
+            this.senhaEncrypt = new Generic.Field(this.Controls, "Senha", 250, true, true);
+            this.procedure = new Generic.Field(this.Controls, "Procedimento", 310, true);
+            this.listViewTag = new ListViewTag<Models.Tag>(this.Controls, "Lista de Tags", Models.Tag.GetTags(), fields);
+            this.passId = new Generic.Field(this.Controls, "ID", 600, true);
+            this.bttnConfirm = new Generic.ButtonForm(this.Controls, "Confirmar", 20, 680, this.ClickOnConfirmBttn);
+            this.bttnCancel = new Generic.ButtonForm(this.Controls, "Voltar", 180, 680, this.ClickOnCancelBttn);
+            
+            this.components = new System.ComponentModel.Container();
+        }
+
+        private void ClickOnConfirmBttn(object sender, EventArgs e) 
+        {
             try
             {
-                if (option == Function.Create)
-                {
-                    SenhaController.InserirSenha(
-                        genericName.textBox.Text,
-                        Convert.ToInt32(categoryId),
-                        genericUrl.textBox.Text,
-                        genericUsuario.textBox.Text,
-                        genericSenhaEncrypt.textBox.Text,
-                        txtProcedure.Text
-                    );
-                    foreach (var item in checkBoxTags.CheckedItems)
-                    {
-                        var tag = item.ToString();
-                        var startId = tag.IndexOf("- ");
-                        var tagId = tag.Substring(0, startId - 1);
-                        TagSenhaController.InserirSenhaTag(
-                            senha.Id,
-                            Convert.ToInt32(tagId)
-                        );
-                    }
-                    MessageBox.Show("Success","Senha cadastrada com sucesso!", MessageBoxButtons.OK);
-                    this.Close();
-                }
-                else if (option == Function.Update)
-                {
-                   SenhaController.AlterarSenha(
-                        passId,
-                        genericName.textBox.Text,
-                        Convert.ToInt32(categoryId),
-                        genericUrl.textBox.Text,
-                        genericUsuario.textBox.Text,
-                        genericSenhaEncrypt.textBox.Text,
-                        txtProcedure.Text
-                    );
-                    foreach (var item in checkBoxTags.CheckedItems)
-                        {
-                            var tag = item.ToString();
-                            var startId = tag.IndexOf("- ");
-                            var tagId = tag.Substring(0, startId - 1);
-                            TagSenhaController.InserirSenhaTag(
-                                senha.Id,
-                                Convert.ToInt32(tagId)
-                        );
-                    }
-                    MessageBox.Show("Success","Senha alterada com sucesso!", MessageBoxButtons.OK);
-                    this.Close();
-                }
+                string comboValue = this.comboCategory.Items[0].ToString(); // "1 - Nome";
+                string[] comboSplit = comboValue.Split('-'); //['1 ', ' Nome']
+
+                SenhaController.AlterarSenha(
+                    Convert.ToInt16(this.passId.textField.Text),
+                    this.name.textField.Text,
+                    Convert.ToInt16(comboSplit[0].Trim()),
+                    this.url.textField.Text,
+                    this.user.textField.Text,
+                    this.senhaEncrypt.textField.Text,
+                    this.procedure.textField.Text
+                );
+                MessageBox.Show("Senha cadastrada com sucesso.");
+                this.Close();
+                SenhaView senha = new SenhaView();
+                senha.ShowDialog();
             }
-            catch (Exception)
+            catch (Exception err)
             {
-                ErrorMessage.Show();
+                MessageBox.Show(err.Message);
             }
         }
 
-        private void ClickOnCancelBttn(object sender, EventArgs e)
+        private void ClickOnCancelBttn(object sender, EventArgs e) 
         {
-            this.Close();
+            this.Hide();
         }
     }
 
